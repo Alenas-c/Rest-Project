@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion des Cinémas</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/cinema.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Gestion des Cinémas</h1>
+
+        <!-- Formulaire pour ajouter un cinéma -->
+        <form action="/cinemas/manage" method="post" class="form-manage">
+            <input type="text" name="name" placeholder="Nom du cinéma" required class="input-text">
+            <input type="text" name="city" placeholder="Ville" required class="input-text">
+            <button type="submit" name="action" value="add" class="button-submit">Ajouter Cinéma</button>
+        </form>
+
+        <!-- Formulaire pour supprimer un cinéma -->
+        <form action="/cinemas/manage" method="post" class="form-manage">
+            <input type="number" name="id" placeholder="ID du cinéma" required class="input-number">
+            <button type="submit" name="action" value="delete" class="button-delete">Supprimer Cinéma</button>
+        </form>
+
+        <!-- Liste des cinémas -->
+        <h2 class="subtitle">Liste des Cinémas</h2>
+        <ul class="cinema-list">
+        {% for cinema in cinemas %}
+            <li class="cinema-item">{{ cinema.ID }}: {{ cinema.name }} - {{ cinema.city }}</li>
+        {% else %}
+            <li class="no-cinemas">Aucun cinéma trouvé</li>
+        {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

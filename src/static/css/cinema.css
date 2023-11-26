@@ -1,0 +1,70 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 80%;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.title, .subtitle {
+    color: #333;
+    text-align: center;
+}
+
+.form-manage {
+    margin-bottom: 20px;
+}
+
+.input-text, .input-number {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.button-submit, .button-delete {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: #5cb85c; /* Vert pour le bouton ajouter */
+    cursor: pointer;
+}
+
+.button-delete {
+    background-color: #d9534f; /* Rouge pour le bouton supprimer */
+}
+
+.button-submit:hover {
+    background-color: #4cae4c; /* Vert foncé au survol */
+}
+
+.button-delete:hover {
+    background-color: #c9302c; /* Rouge foncé au survol */
+}
+
+.cinema-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.cinema-item {
+    background-color: #f9f9f9;
+    border: 1px solid #eaeaea;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.no-cinemas {
+    text-align: center;
+}

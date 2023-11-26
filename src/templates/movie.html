@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion des Films</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/movie.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Emplacement pour les messages flash -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% if cinema_id %}
+            <form action="/movies/manage/logout" method="post">
+                <button type="submit" class="button-logout">Retour à l'authentification</button>
+            </form>
+            <h1 class="title">Gestion des Films pour le Cinéma ID: {{ cinema_id }}</h1>
+
+            <!-- Formulaire pour ajouter un film -->
+            <form action="/movies/manage" method="post" class="form-add-movie">
+                <input type="text" name="title" placeholder="Titre du film" required>
+                <input type="text" name="director" placeholder="Réalisateur" required>
+                <input type="text" name="duree" placeholder="Durée du film (en minutes)" required>
+                <input type="text" name="langue" placeholder="Langue du film" required>
+                <input type="date" name="date_debut" placeholder="Date de début" required>
+                <input type="date" name="date_fin" placeholder="Date de fin" required>
+                <button type="submit" name="action" value="add" class="button-add">Ajouter Film</button>
+            </form>
+
+            <!-- Liste des films avec option de suppression -->
+            <h2 class="subtitle">Films du Cinéma</h2>
+            <ul class="movie-list">
+                {% for movie in movies %}
+                    <li class="movie-item">
+                        {{ movie.Title }} - Réalisé par {{ movie.Director }} - {{ movie.Langue }} - {{ movie.Duree }}min - du {{ movie.DateDebut }} au {{ movie.DateFin }}
+                        <!-- Formulaire pour supprimer un film -->
+                        <form action="/movies/manage" method="post" class="form-delete-movie">
+                            <input type="hidden" name="movie_id" value="{{ movie.ID }}">
+                            <button type="submit" name="action" value="delete" class="button-delete">Supprimer</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li class="no-movies">Aucun film trouvé pour ce cinéma</li>
+                {% endfor %}
+            </ul>
+            
+            <!-- Programme les séances -->
+            <h2 class="subtitle">Programmer une Séance</h2>
+            <form action="/movies/manage" method="post" class="form-program-seance">
+                <select name="movie_id" class="select-movie">
+                    {% for movie in movies %}
+                        <option value="{{ movie.ID }}">{{ movie.Title }}</option>
+                    {% endfor %}
+                </select>
+                <input type="time" name="heure_debut" required>
+                <input type="date" name="date" required>
+                <button type="submit" name="action" value="add_seance" class="button-program">Programmer Séance</button>
+            </form>
+            
+            <!-- Tableau des séances pour chaque film -->
+            <h2 class="subtitle">Programmes des Séances</h2>
+            {% for movie in movies %}
+                <h3 class="movie-title">{{ movie.Title }}</h3>
+                <table class="seance-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Heure de Début</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for seance in movies_seances[movie.ID] %}
+                            <tr>
+                                <td>{{ seance.Date.strftime('%Y-%m-%d') }}</td>
+                                <td>{{ seance.HeureDebut.strftime('%H:%M') }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="2" class="no-seances">Pas de séances programmées</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endfor %}
+        {% else %}
+            <h1 class="auth-title">Authentification ou Création de Session</h1>
+            
+            <!-- Formulaire d'authentification -->
+            <form action="/movies/manage" method="post" class="form-auth">
+                <input type="number" name="cinema_id_auth" placeholder="ID du cinéma" required>
+                <input type="password" name="Cle" placeholder="Mot de passe" required>
+                <button type="submit" class="button-auth">Authentifier</button>
+            </form>
+
+            <!-- Formulaire de création de session -->
+            <h2 class="subtitle">Créer une Session</h2>
+            <form action="/movies/manage" method="post" class="form-create-session">
+                <input type="number" name="cinema_id" placeholder="ID du cinéma pour nouvelle session" required>
+                <input type="password" name="Cle" placeholder="Mot de passe pour nouvelle session" required>
+                <button type="submit" name="create_session" class="button-create">Créer Session</button>
+            </form>
+        {% endif %}
+    </div>
+</body>
+</html>

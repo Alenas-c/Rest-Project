@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Cinémas et Films</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/index.css">
+
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Cinémas et Films</h1>
+
+        <!-- Formulaire de filtrage -->
+        <div class="filters">
+            <form action="/" method="get" class="filter-form">
+                <!-- Filtre par ville -->
+                <select name="city" class="filter-city">
+                    <option value="">Sélectionner une ville</option>
+                    {% for ville in villes %}
+                        <option value="{{ ville }}" {% if ville == filter_city %}selected{% endif %}>{{ ville }}</option>
+                    {% endfor %}
+                </select>
+
+                <!-- Filtre par film -->
+                <select name="film" class="filter-film">
+                    <option value="">Sélectionner un film</option>
+                    {% for film in films %}
+                        <option value="{{ film }}" {% if film == filter_film %}selected{% endif %}>{{ film }}</option>
+                    {% endfor %}
+                </select>
+
+                <button type="submit" class="filter-button">Filtrer</button>
+            </form>
+        </div>
+
+        <!-- Affichage des cinémas et de leurs films -->
+        <div class="cinema-list">
+            {% for cinema, movies in cinema_movies.items() %}
+                <div class="cinema-block">
+                    <h2 class="cinema-name">{{ cinema.name }} ({{ cinema.city }})</h2>
+                    <ul class="movie-list">
+                        {% for movie in movies %}
+                            <li class="movie-item">
+                                <span class="movie-title">{{ movie.Title }}</span> - Réalisé par <span class="movie-director">{{ movie.Director }}</span>
+                            </li>
+                        {% else %}
+                            <li class="movie-item">Aucun film trouvé pour ce cinéma</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% else %}
+                <p class="no-cinema">Aucun cinéma trouvé</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
