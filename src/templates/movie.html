@@ -24,12 +24,13 @@
 
             <!-- Formulaire pour ajouter un film -->
             <form action="/movies/manage" method="post" class="form-add-movie">
-                <input type="text" name="title" placeholder="Titre du film" required>
-                <input type="text" name="director" placeholder="Réalisateur" required>
-                <input type="text" name="duree" placeholder="Durée du film (en minutes)" required>
-                <input type="text" name="langue" placeholder="Langue du film" required>
-                <input type="date" name="date_debut" placeholder="Date de début" required>
-                <input type="date" name="date_fin" placeholder="Date de fin" required>
+                <input type="text" name="backdrop_path" placeholder="Lien image">
+                <input type="text" name="genres" placeholder="Genres" required>
+                <input type="text" name="overview" placeholder="Synopsis" required>
+                <input type="text" name="poster_path" placeholder="Chemin du poster">
+                <input type="text" name="release_date" placeholder="Date de sortie" required>
+                <input type="text" name="title" placeholder="Titre" required>
+                <!-- ID_Cinema est déjà dans la session -->
                 <button type="submit" name="action" value="add" class="button-add">Ajouter Film</button>
             </form>
 
@@ -38,10 +39,16 @@
             <ul class="movie-list">
                 {% for movie in movies %}
                     <li class="movie-item">
-                        {{ movie.Title }} - Réalisé par {{ movie.Director }} - {{ movie.Langue }} - {{ movie.Duree }}min - du {{ movie.DateDebut }} au {{ movie.DateFin }}
+                        <img src="{{ movie.poster_path }}" alt="{{ movie.original_title }}" class="movie-poster">
+                        {{ movie.original_title }} - {{ movie.genres }}
+                        <div>
+                            <p>{{ movie.overview }}</p>
+                            <span>Sortie : {{ movie.release_date }}</span>
+                            <span>ID : {{ movie._id }}</span>
+                        </div>
                         <!-- Formulaire pour supprimer un film -->
                         <form action="/movies/manage" method="post" class="form-delete-movie">
-                            <input type="hidden" name="movie_id" value="{{ movie.ID }}">
+                            <input type="hidden" name="movie_id" value="{{ movie._id }}">
                             <button type="submit" name="action" value="delete" class="button-delete">Supprimer</button>
                         </form>
                     </li>

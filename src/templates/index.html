@@ -41,7 +41,13 @@
                     <ul class="movie-list">
                         {% for movie in movies %}
                             <li class="movie-item">
-                                <span class="movie-title">{{ movie.Title }}</span> - Réalisé par <span class="movie-director">{{ movie.Director }}</span>
+                                <img src="{{ movie.poster_path }}" alt="{{ movie.title }}" class="movie-poster">
+                                <div class="movie-info">
+                                    <span class="movie-title">{{ movie.title }}</span>
+                                    <span class="movie-genres">{{ movie.genres }}</span>
+                                    <span class="movie-release-date">{{ movie.release_date }}</span>
+                                    <p class="movie-overview">{{ movie.overview }}</p>
+                                </div>
                             </li>
                         {% else %}
                             <li class="movie-item">Aucun film trouvé pour ce cinéma</li>
