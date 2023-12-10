@@ -4,14 +4,17 @@ Ce projet est une application web Flask qui permet aux propriétaires de cinéma
 
 ## Fonctionnalités
 
-- Authentification des propriétaires de cinémas.
-- Ajout, modification et suppression de films.
-- Affichage des films disponibles selon le cinéma sélectionné.
-- Programmation des séances pour chaque film.
-- Filtrage des films et cinémas par ville.
+- Authentification des propriétaires de cinémas. (route /movie/manage)
+- Ajout, modification et suppression de films. (route /movie/manage)
+- Affichage des films disponibles selon le cinéma sélectionné. ( route /)
+- Programmation des séances pour chaque film. (route /movie/manage)
+- Filtrage des films et cinémas par ville. (route /)
+- Ajout / Suppression d'un cinéma (route /cinema/manage)
+- Détails d'un film (route /movie/{id du film})
 
 ## Technologies Utilisées
 
+- Langage : Python
 - Flask : un micro-framework web Python.
 - SQLAlchemy : un ORM (Object-Relational Mapping) pour gérer la base de données.
 - MySQL : un système de gestion de base de données.
@@ -72,8 +75,13 @@ Avant de lancer l'application, assurez-vous de configurer les variables d'enviro
     DATABASE_URL=mysql+pymysql://utilisateur:motdepasse@localhost:3306/nom_de_la_db
     ```
 
-## Contribution
+## Rapport
 
-Si vous souhaitez contribuer à ce projet, veuillez suivre les bonnes pratiques de codage et ajouter des tests unitaires pour les nouvelles fonctionnalités.
+- L'énoncé du projet: Ce qui est demandé dans l'énnoncé du projet.
+- L'oragnisation du projet : qui a fait quoi.
+- Déroulement du projet : méthodologie d'organistation/ réunions ....
+- Technologie utilisées
+- Compétences acquises .... 
+
 
 

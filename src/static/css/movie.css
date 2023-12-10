@@ -70,11 +70,11 @@ table {
 th, td {
     text-align: left;
     padding: 8px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #ffffff;
 }
 
 th {
-    background-color: #f2f2f2;
+    background-color: rgb(250,204,4);
 }
 
 /* Styles supplémentaires pour les messages flash */
@@ -126,16 +126,35 @@ th {
     margin-top: 10px;
 }
 
-.button-delete {
+.button-delete, .btn-seance-delete {
     background-color: #d9534f; /* Rouge pour le bouton supprimer */
     color: white;
     cursor: pointer;
 }
 
-.button-delete:hover {
+.button-delete:hover, .btn-seance-delete:hover {
     background-color: #c9302c; /* Rouge foncé au survol */
 }
 
 .no-movies {
     text-align: center;
+}
+
+.seance-table{
+    background-color: rgb(248, 231, 156);
+}
+
+.btn-seance-delete{
+    margin-left: 0px;
+    margin-right: 0;
+    width: 30%;
+    float: left;
+
+}
+
+.button-program{
+    background-color: rgb(98, 98, 98)
+}
+.button-program:hover{
+    background-color: rgb(46, 46, 46)
 }

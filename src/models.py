@@ -46,7 +46,7 @@ class Session(db.Model):
 class Seance(db.Model):
     __tablename__ = 'Seance'
     ID = db.Column(db.Integer, primary_key=True)
-    ID_Movie = db.Column(db.Integer, db.ForeignKey('Movie.ID'))
+    ID_Movie = db.Column(db.BigInteger, db.ForeignKey('MoviesAPI._id'))
     ID_Cinema = db.Column(db.Integer, db.ForeignKey('Cinema.ID'))
     HeureDebut = db.Column(db.Time)
     Date = db.Column(db.Date)

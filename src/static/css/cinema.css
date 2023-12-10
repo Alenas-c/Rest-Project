@@ -30,7 +30,7 @@ body {
     border-radius: 5px;
 }
 
-.button-submit, .button-delete {
+.button-submit, .button-delete,.btn-acceuil {
     width: 100%;
     padding: 10px;
     border: none;
@@ -67,4 +67,11 @@ body {
 
 .no-cinemas {
     text-align: center;
+}
+
+.btn-acceuil{
+    background-color: dodgerblue;
+}
+.btn-acceuil:hover{
+    background-color: rgb(21, 120, 220);
 }
