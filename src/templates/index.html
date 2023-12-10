@@ -7,7 +7,22 @@
 
 </head>
 <body>
+    <script src="../static/js/popup.js"></script>
+     <!-- Bouton S'authentifier -->
+
+
     <div class="container">
+        <button id="authBtn" class="auth-button">S'authentifier</button>
+
+        <!-- Pop-up Authentification -->
+        <div id="authPopup" class="auth-popup" style="display:none;">
+            <div class="popup-header">
+                <span class="close-btn" id="closePopup">&times;</span>
+            </div>
+            <button onclick="window.location.href='/movies/manage'">Se connecter en tant que cinéma</button>
+            <button onclick="window.location.href='/cinemas/manage'">Se connecter en tant qu'administrateur</button>
+        </div>
+    
         <h1 class="title">Cinémas et Films</h1>
 
         <!-- Formulaire de filtrage -->

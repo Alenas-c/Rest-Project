@@ -6,7 +6,7 @@ import hashlib
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'toto24'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:A!enas22932293@localhost:3306/Cinema'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root@localhost:3306/Cinema'
     db.init_app(app)
     @app.route('/', methods=['GET'])
     def index():
@@ -29,8 +29,6 @@ def create_app():
             cinema_movies[cinema] = query.all()
 
         return render_template('index.html', cinema_movies=cinema_movies, villes=villes, films=films, filter_city=selected_city, filter_film=selected_film)
-
-
 
     # Route pour la gestion des cinémas
     @app.route('/cinemas/manage', methods=['GET', 'POST'])
