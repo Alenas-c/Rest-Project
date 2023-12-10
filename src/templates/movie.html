@@ -7,6 +7,8 @@
 </head>
 <body>
     <div class="container">
+        
+
         <!-- Emplacement pour les messages flash -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
@@ -17,19 +19,35 @@
         {% endwith %}
 
         {% if cinema_id %}
-            <form action="/movies/manage/logout" method="post">
-                <button type="submit" class="button-logout">Retour à l'authentification</button>
-            </form>
+            <div class="header-button">
+                <button class="btn-acceuil" onclick="window.location.href='/'">Acceuil</button>
+                <form class="form-logout" action="/movies/manage/logout" method="post">
+                    <button type="submit" class="button-logout">Retour à l'authentification</button>
+                </form>
+            </div>
+
             <h1 class="title">Gestion des Films pour le Cinéma ID: {{ cinema_id }}</h1>
 
             <!-- Formulaire pour ajouter un film -->
             <form action="/movies/manage" method="post" class="form-add-movie">
-                <input type="text" name="title" placeholder="Titre du film" required>
-                <input type="text" name="director" placeholder="Réalisateur" required>
-                <input type="text" name="duree" placeholder="Durée du film (en minutes)" required>
-                <input type="text" name="langue" placeholder="Langue du film" required>
-                <input type="date" name="date_debut" placeholder="Date de début" required>
-                <input type="date" name="date_fin" placeholder="Date de fin" required>
+                <!-- Nouveau: Menu déroulant pour sélectionner un film de la base de données -->
+                <div class="form-group">
+                    <label for="film_id">Ajouter un film existant :</label>
+                    <select name="film_id" id="film_id">
+                        <option value="">Sélectionnez un film</option>
+                        {% for f in films_possibles %}
+                            <option value="{{ f._id }}">{{ f.title }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" name="action" value="add" class="button-add">Ajouter Film</button>
+                </div>
+                <input type="text" name="backdrop_path" placeholder="Lien image">
+                <input type="text" name="genres" placeholder="Genres" >
+                <input type="text" name="overview" placeholder="Synopsis">
+                <input type="text" name="poster_path" placeholder="Chemin du poster">
+                <input type="text" name="release_date" placeholder="Date de sortie">
+                <input type="text" name="title" placeholder="Titre">
+                <!-- ID_Cinema est déjà dans la session -->
                 <button type="submit" name="action" value="add" class="button-add">Ajouter Film</button>
             </form>
 
@@ -38,10 +56,16 @@
             <ul class="movie-list">
                 {% for movie in movies %}
                     <li class="movie-item">
-                        {{ movie.Title }} - Réalisé par {{ movie.Director }} - {{ movie.Langue }} - {{ movie.Duree }}min - du {{ movie.DateDebut }} au {{ movie.DateFin }}
+                        <img src="{{ movie.poster_path }}" alt="{{ movie.original_title }}" class="movie-poster">
+                        {{ movie.original_title }} - {{ movie.genres }}
+                        <div>
+                            <p>{{ movie.overview }}</p>
+                            <span>Sortie : {{ movie.release_date }}</span>
+                            <span>ID : {{ movie._id }}</span>
+                        </div>
                         <!-- Formulaire pour supprimer un film -->
                         <form action="/movies/manage" method="post" class="form-delete-movie">
-                            <input type="hidden" name="movie_id" value="{{ movie.ID }}">
+                            <input type="hidden" name="movie_id" value="{{ movie._id }}">
                             <button type="submit" name="action" value="delete" class="button-delete">Supprimer</button>
                         </form>
                     </li>
@@ -55,7 +79,7 @@
             <form action="/movies/manage" method="post" class="form-program-seance">
                 <select name="movie_id" class="select-movie">
                     {% for movie in movies %}
-                        <option value="{{ movie.ID }}">{{ movie.Title }}</option>
+                        <option value="{{ movie._id }}">{{ movie.title }}</option>
                     {% endfor %}
                 </select>
                 <input type="time" name="heure_debut" required>
@@ -66,23 +90,33 @@
             <!-- Tableau des séances pour chaque film -->
             <h2 class="subtitle">Programmes des Séances</h2>
             {% for movie in movies %}
-                <h3 class="movie-title">{{ movie.Title }}</h3>
+                <h3 class="movie-title">{{ movie.title }}</h3>
                 <table class="seance-table">
                     <thead>
-                        <tr>
+                        <tr class="thead">
                             <th>Date</th>
                             <th>Heure de Début</th>
+                            <th></th>
+
                         </tr>
                     </thead>
                     <tbody>
-                        {% for seance in movies_seances[movie.ID] %}
+                        {% for seance in movies_seances[movie._id] %}
                             <tr>
                                 <td>{{ seance.Date.strftime('%Y-%m-%d') }}</td>
                                 <td>{{ seance.HeureDebut.strftime('%H:%M') }}</td>
+                                <td>
+                                    <!-- Formulaire pour supprimer une séance -->
+                                    <form action="/movies/manage" method="post" class="form-delete-seance">
+                                        <input type="hidden" name="seance_id" value="{{ seance.ID }}">
+                                        <button type="submit" name="action" value="delete_seance" class="btn-seance-delete">Supprimer</button>
+                                    </form>
+                                </td>
+
                             </tr>
                         {% else %}
                             <tr>
-                                <td colspan="2" class="no-seances">Pas de séances programmées</td>
+                                <td colspan="3" class="no-seances">Pas de séances programmées</td>
                             </tr>
                         {% endfor %}
                     </tbody>

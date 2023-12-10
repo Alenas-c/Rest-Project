@@ -7,7 +7,25 @@
 
 </head>
 <body>
+    <script src="../static/js/popup.js"></script>
+     <!-- Bouton S'authentifier -->
+
+
     <div class="container">
+        <button id="authBtn" class="auth-button" >S'authentifier</button>
+        <img class="logo-img" onclick="window.location.href='/'" src="../static/img/logo.png"></img>
+
+        <!-- Pop-up Authentification -->
+        <div id="authPopup" class="auth-popup" style="display:none;">
+            <div class="popup-header">
+                <span class="close-btn" id="closePopup">&times;</span>
+            </div>
+            <div class="connection-buttons">
+                <button class="popup-button" onclick="window.location.href='/movies/manage'">Cinéma</button>
+                <button class="popup-button" onclick="window.location.href='/cinemas/manage'">Admin</button>
+            </div>
+        </div>
+    
         <h1 class="title">Cinémas et Films</h1>
 
         <!-- Formulaire de filtrage -->
@@ -41,7 +59,15 @@
                     <ul class="movie-list">
                         {% for movie in movies %}
                             <li class="movie-item">
-                                <span class="movie-title">{{ movie.Title }}</span> - Réalisé par <span class="movie-director">{{ movie.Director }}</span>
+                                <img src="{{ movie.poster_path }}" alt="{{ movie.title }}" class="movie-poster">
+                                <div class="movie-info">
+                                    <span class="movie-title">{{ movie.title }}</span>
+                                    <span class="movie-genres">{{ movie.genres }}</span>
+                                    <span class="movie-release-date">{{ movie.release_date }}</span>
+                                    <p class="movie-overview">{{ movie.overview }}</p>
+                                </div>
+                                 <!-- Bouton pour voir les détails du film -->
+                                <button class="details-button" onclick="window.location.href='/movie/{{ movie._id }}'">Voir Détails</button>
                             </li>
                         {% else %}
                             <li class="movie-item">Aucun film trouvé pour ce cinéma</li>

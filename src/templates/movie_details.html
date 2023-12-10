@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Détails du Film</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/movie_details.css">
+</head>
+<body style="background-image: url('{{ movie.backdrop_path }}');">
+    <div class="container">
+        <div class="movie-info-block">
+            <img class="logo-img" onclick="window.location.href='/'" src="../static/img/logo.png"></img>
+
+
+            <h1 class="title">{{ movie.title }}</h1>
+            <div class="movie-details">
+                <img src="{{ movie.poster_path }}" alt="{{ movie.title }}" class="movie-poster">
+                <div class="movie-info">
+                    <p><strong>Genres :</strong> {{ movie.genres }}</p>
+                    <p><strong>Date de sortie :</strong> {{ movie.release_date }}</p>
+                    <p><strong>Synopsis :</strong> {{ movie.overview }}</p>
+                </div>
+            </div>
+            <h2>Séances</h2>
+            <table class="seance-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Heure de Début</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for seance in seances %}
+                        <tr>
+                            <td>{{ seance.Date.strftime('%Y-%m-%d') }}</td>
+                            <td>{{ seance.HeureDebut.strftime('%H:%M') }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="2">Aucune séance programmée pour ce film.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

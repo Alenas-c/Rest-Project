@@ -2,23 +2,27 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #e5e5e5;
+}
+.auth-section {
+    text-align: center;
+    margin-top: 20px;
 }
 
 .container {
     width: 80%;
-    margin: 0 auto;
-    background-color: #ffffff;
+    margin: 20px auto;
+    background-color: #fff;
     padding: 20px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.title {
-    color: #333333;
+.title, h2 {
+    color: #333;
     text-align: center;
 }
 
-.filters {
+.filters, .cinema-list {
     margin-bottom: 20px;
 }
 
@@ -26,45 +30,332 @@ body {
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-bottom: 20px;
 }
 
-.filter-city,
-.filter-film {
+.filter-city, .filter-film, .filter-button {
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid #cccccc;
+    border: 1px solid #ccc;
 }
 
 .filter-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #e9e9e9;
+    background-color: rgb(250,204,4);
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .filter-button:hover {
-    background-color: #d9d9d9;
+    background-color: rgb(255, 229, 112);
 }
 
-.cinema-list h2 {
-    color: #333333;
-    border-bottom: 2px solid #f4f4f4;
-    padding-bottom: 5px;
-}
-
-.cinema-list ul {
+.movie-list {
     list-style: none;
     padding: 0;
 }
 
-.cinema-list li {
-    background-color: #f4f4f4;
-    margin-bottom: 5px;
-    padding: 10px;
+.movie-item {
+    background-color: #f9f9f9;
+    border: 1px solid #eaeaea;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.movie-poster {
+    width: 100px;
+    height: 150px;
+    object-fit: cover;
+    margin-right: 15px;
     border-radius: 5px;
 }
 
-/* Ajoutez plus de styles personnalisés ici si nécessaire */
+.movie-info {
+    /*flex-grow: 1;*/
+    width: 80%;
+}
+
+.movie-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.movie-genres, .movie-release-date {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+}
+
+.movie-overview {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+    text-align: justify;
+}
+.modal {
+    display: none; /* Caché par défaut */
+    position: fixed; /* Reste en place même lors du défilement */
+    z-index: 1; /* Se situe au-dessus de tout */
+    left: 0;
+    top: 0;
+    width: 100%; /* Largeur totale */
+    height: 100%; /* Hauteur totale */
+    overflow: auto; /* Permet le défilement si nécessaire */
+    background-color: rgb(0,0,0); /* Couleur de fond */
+    background-color: rgba(0,0,0,0.4); /* Couleur de fond avec opacité */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% du haut et centré horizontalement */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Largeur du contenu */
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+/* Bouton d'authentification et Pop up */
+
+.auth-button {
+    padding: 10px 20px;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    float:right;
+}
+
+.auth-popup {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.25);
+    text-align: center;
+}
+
+.auth-popup button {
+    margin: 10px;
+    padding: 10px 20px;
+}
+.popup-header {
+    text-align: right;
+}
+
+.close-btn {
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+button {
+    width: 90px;
+    height: 45px;
+    margin-left: 15px;
+    margin-right: 0;
+    align-items: center;
+    background-image: linear-gradient(135deg, #f34079 40%, #fc894d);
+    border: 0;
+    border-radius: 10px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    font-family: "Codec cold",sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    justify-content: center;
+    letter-spacing: .4px;
+    line-height: 1;
+    max-width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 3px;
+    text-decoration: none;
+    text-transform: uppercase;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    
+
+}
+
+button:active {
+  outline: 0;
+}
+
+button:hover {
+  outline: 0;
+}
+
+button {
+  transition: all 200ms;
+}
+
+button:hover {
+  transform: scale(.9);
+  opacity: .75;
+}
+
+@media screen and (max-width: 991px) {
+  button {
+    font-size: 7px;
+    height: 50px;
+  }
+
+  button {
+    line-height: 50px;
+  }
+}
+
+
+.auth-button {
+  align-items: center;
+  appearance: none;
+  background-clip: padding-box;
+  background-color: initial;
+  background-image: none;
+  border-style: none;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  flex-direction: row;
+  flex-shrink: 0;
+  font-family: Eina01,sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  justify-content: center;
+  line-height: 24px;
+  margin: 0;
+  min-height: 64px;
+  outline: none;
+  overflow: visible;
+  padding: 19px 26px;
+  pointer-events: auto;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  width: auto;
+  word-break: keep-all;
+  z-index: 0;
+}
+
+@media (min-width: 768px) {
+  .auth-button {
+    padding: 19px 32px;
+  }
+}
+
+.auth-button:before,
+.auth-button:after {
+  border-radius: 80px;
+}
+
+.auth-button:before {
+  background-image: linear-gradient(92.83deg, #ff7426 0, #f93a13 100%);
+  content: "";
+  display: block;
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: -2;
+}
+
+.auth-button:after {
+  background-color: initial;
+  background-image: linear-gradient(#541a0f 0, #0c0d0d 100%);
+  bottom: 4px;
+  content: "";
+  display: block;
+  left: 4px;
+  overflow: hidden;
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  transition: all 100ms ease-out;
+  z-index: -1;
+}
+
+.auth-button:hover:not(:disabled):before {
+  background: linear-gradient(92.83deg, rgb(255, 116, 38) 0%, rgb(249, 58, 19) 100%);
+}
+
+.auth-button:hover:not(:disabled):after {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  transition-timing-function: ease-in;
+  opacity: 0;
+}
+
+.auth-button:active:not(:disabled) {
+  color: #ccc;
+}
+
+.auth-button:active:not(:disabled):before {
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, .2), rgba(0, 0, 0, .2)), linear-gradient(92.83deg, #ff7426 0, #f93a13 100%);
+}
+
+.auth-button:active:not(:disabled):after {
+  background-image: linear-gradient(#541a0f 0, #0c0d0d 100%);
+  bottom: 4px;
+  left: 4px;
+  right: 4px;
+  top: 4px;
+}
+
+.auth-button:disabled {
+  cursor: default;
+  opacity: .24;
+}
+
+.connection-buttons{
+    display: flex;
+    flex-direction:row;
+}
+.popup-button{
+    background-image: none;
+    background-color: #333;
+    font-size: 10px;
+    color: white;
+    padding-left: 15px;
+    padding-right: 15px;
+
+}
+.popup-button:hover{
+    background-color: #676767;
+}
+
+.logo-img{
+    width: 100px;
+    height: 100px;
+}
