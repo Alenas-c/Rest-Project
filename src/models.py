@@ -7,7 +7,6 @@ class Cinema(db.Model):
     ID = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255))
     city = db.Column(db.String(255))
-    # Relations et autres champs comme nécessaires
 
 class MoviesAPI(db.Model):
     __tablename__ = 'MoviesAPI'
@@ -17,11 +16,10 @@ class MoviesAPI(db.Model):
     original_title = db.Column(db.Text)
     overview = db.Column(db.Text)
     poster_path = db.Column(db.Text)
-    release_date = db.Column(db.Text)  # Si cette colonne contient des dates, envisagez d'utiliser db.Date
+    release_date = db.Column(db.Text)  
     title = db.Column(db.Text)
     contentType = db.Column(db.Text)
     ID_Cinema = db.Column(db.Integer, db.ForeignKey('Cinema.ID'))
-    # Vous pouvez ajouter des relations et des méthodes supplémentaires ici si nécessaire
 
 
 #class Movie(db.Model):
@@ -34,14 +32,12 @@ class MoviesAPI(db.Model):
 #    Langue = db.Column(db.String(255))
 #    DateDebut = db.Column(db.Date)
 #    DateFin = db.Column(db.Date)
-    # Autres champs et relations
 
 class Session(db.Model):
     __tablename__ = 'Session'
     ID = db.Column(db.Integer, primary_key=True)
     ID_Cinema = db.Column(db.Integer, db.ForeignKey('Cinema.ID'))
     Cle = db.Column(db.String(255))
-    # Autres champs et relations
 
 class Seance(db.Model):
     __tablename__ = 'Seance'
@@ -50,4 +46,3 @@ class Seance(db.Model):
     ID_Cinema = db.Column(db.Integer, db.ForeignKey('Cinema.ID'))
     HeureDebut = db.Column(db.Time)
     Date = db.Column(db.Date)
-    # Autres champs et relations

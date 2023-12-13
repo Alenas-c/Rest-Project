@@ -1,3 +1,5 @@
+# CES FICHIERS SONT DES SCRIPTS QUI PERMETTENT DE REMPLIR LES AUTRES TABLE DE FACON ALEATOIRE
+
 import pymysql
 
 # Paramètres de connexion à la base de données MySQL

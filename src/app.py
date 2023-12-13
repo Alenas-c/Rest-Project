@@ -10,12 +10,14 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root@localhost:3306/Cinema'
     db.init_app(app)
     
-    
+    # Route / (acceuil) permet a l'utilisateur de visualiser la liste des Cinémas et leurs films, et de filtrer par ville/film
+    # On peut egalement avoir des informations supplémentaires pour chaque film.
     @app.route('/', methods=['GET'])
     def index():
+        # Requête SQL permettant de récupérer les villes listées dans la table "Cinema"
         villes = Cinema.query.with_entities(Cinema.city).distinct().all()
         villes = [ville.city for ville in villes]
-
+        # Requête SQL permettant de récupérer les films listés dans table MoviesAPI
         films = MoviesAPI.query.with_entities(MoviesAPI.title).distinct().all()
         films = [film.title for film in films]
 
@@ -32,14 +34,28 @@ def create_app():
                 query = query.filter(MoviesAPI.title == selected_film)
             cinema_movies[cinema] = query.all()
             
-            # Nouveau : récupérer les séances pour chaque film
+            # récupérer les séances pour chaque film
             for movie in cinema_movies[cinema]:
                 seances = Seance.query.filter_by(ID_Movie=movie._id, ID_Cinema=cinema.ID).all()
                 seances_par_film[movie._id] = seances
 
         return render_template('index.html', cinema_movies=cinema_movies, villes=villes, films=films, filter_city=selected_city, filter_film=selected_film, seances_par_film=seances_par_film)
-
-    # Route pour la gestion des cinémas
+    
+    @app.route('/cinemas/login', methods=['GET', 'POST'])
+    def login():
+        if request.method == 'POST':
+            username = request.form['username']
+            password = request.form['password']
+            # Vérifiez ici les identifiants (exemple simplifié)
+            if username == "admin" and password == "secret":
+                return redirect(url_for('manage_cinemas'))
+            else:
+                flash("Utilisateur ou mot de passe incorrects","error")
+                return render_template('login.html')
+        return render_template('login.html')
+    
+    # Route pour la gestion des cinémas (Ajout / Suppréssion d'un film)
+    
     @app.route('/cinemas/manage', methods=['GET', 'POST'])
     def manage_cinemas():
         if request.method == 'POST':
@@ -57,15 +73,22 @@ def create_app():
         cinemas = Cinema.query.all()
         return render_template('cinema.html', cinemas=cinemas)
 
-    # Route pour la gestion des films
+    # Route pour la gestion des films (Ajout/suppréssion d'un film, Ajout/suppréssion d'une séance de film)
     @app.route('/movies/manage', methods=['GET', 'POST'])
     def manage_movies():
         films_possibles= []
         if 'cinema_id' not in session:
             if request.method == 'POST':
                 if 'create_session' in request.form:
-                    # Vérifier si une session existe déjà
+                    
                     cinema_id = request.form['cinema_id']
+                    # Vérifiez si l'ID de cinéma existe
+                    cinema_exists = Cinema.query.get(cinema_id)
+                    if not cinema_exists:
+                        flash("ID cinéma renseigné n'existe pas", 'error')
+                        return redirect(url_for('manage_movies'))
+                                        
+                    # Vérifier si une session existe déjà
                     existing_session = Session.query.filter_by(ID_Cinema=cinema_id).first()
 
                     if existing_session:
@@ -132,6 +155,7 @@ def create_app():
                             # Générer un identifiant unique basé sur le hachage
                             unique_string = film_existant.title + film_existant.genres + film_existant.overview
                             unique_id = int(hashlib.sha256(unique_string.encode('utf-8')).hexdigest(), 16) % 10**8
+                            # On créer une nouvelle instance de MoviesAPI (table) et on l'ajoute a la table.
                             new_movie = MoviesAPI(
                                 _id = unique_id,
                                 backdrop_path = film_existant.backdrop_path,
@@ -181,7 +205,7 @@ def create_app():
                     movie_id = request.form['movie_id']
                     heure_debut = request.form['heure_debut']
                     date = request.form['date']
-
+                    # Création d'un instance de Seance, et l'ajouter a la table.
                     new_seance = Seance(ID_Movie=movie_id, ID_Cinema=session['cinema_id'], HeureDebut=heure_debut, Date=date)
                     db.session.add(new_seance)
                     db.session.commit()
@@ -220,6 +244,7 @@ def create_app():
         session.pop('cinema_id', None)  # Supprime l'ID du cinéma de la session
         return redirect(url_for('manage_movies'))  # Redirige vers la page d'authentification
     
+    # Route dynamique créee a partir de l'identifiant du film
     @app.route('/movie/<int:movie_id>', methods=['GET'])
     def movie_details(movie_id):
         movie = MoviesAPI.query.get(movie_id)
