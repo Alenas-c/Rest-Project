@@ -7,13 +7,12 @@
 
 </head>
 <body>
+    <img class="logo-img" onclick="window.location.href='/'" src="../static/img/logo.png"></img>
     <script src="../static/js/popup.js"></script>
-     <!-- Bouton S'authentifier -->
-
-
     <div class="container">
+        <!-- Bouton S'authentifier -->
         <button id="authBtn" class="auth-button" >S'authentifier</button>
-        <img class="logo-img" onclick="window.location.href='/'" src="../static/img/logo.png"></img>
+        
 
         <!-- Pop-up Authentification -->
         <div id="authPopup" class="auth-popup" style="display:none;">
@@ -22,7 +21,7 @@
             </div>
             <div class="connection-buttons">
                 <button class="popup-button" onclick="window.location.href='/movies/manage'">Cinéma</button>
-                <button class="popup-button" onclick="window.location.href='/cinemas/manage'">Admin</button>
+                <button class="popup-button" onclick="window.location.href='/cinemas/login'">Admin</button>
             </div>
         </div>
     

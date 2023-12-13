@@ -1,3 +1,4 @@
+# Fichier permettant de créer un table MoviesAPI a partir de données récupérées d'une API Publique
 import requests
 import pandas as pd
 import sqlalchemy

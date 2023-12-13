@@ -1,3 +1,5 @@
+# CES FICHIERS SONT DES SCRIPTS QUI PERMETTENT DE REMPLIR LES AUTRES TABLE DE FACON ALEATOIRE
+
 from models import db, MoviesAPI, Seance, Cinema
 from datetime import datetime, timedelta
 import random
